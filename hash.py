@@ -1,6 +1,7 @@
 import binascii
 import hashlib
-
+HASHFILE = 'D:\\_Repos\\HashCracker\\HashCracker\\hashes.txt'
+WORDFILE = 'D:\\_Repos\\HashCracker\\HashCracker\\cracklib-small.txt'
 def hash(salt, passwd):
     sx = binascii.unhexlify(salt)
     pb = passwd.encode("utf-8")
@@ -8,7 +9,7 @@ def hash(salt, passwd):
     return hashlib.sha1(sx + md5sum + pb).hexdigest()
 
 def checkOneWord(name, salt, myhash):
-    with open('c:\\Users\\TreyS\\OneDrive\\Desktop\\cracklib-small.txt', 'r') as wordfile:
+    with open(WORDFILE, 'r') as wordfile:
         for word in wordfile:
             newhash = hash(salt,word.strip())
             if (newhash == myhash): #if one word pass
@@ -20,7 +21,7 @@ def checkOneWord(name, salt, myhash):
                 return True
             
 def checkTwoWords(name, salt, myhash):
-    with open('c:\\Users\\TreyS\\OneDrive\\Desktop\\cracklib-small.txt', 'r') as wordfile:
+    with open(WORDFILE, 'r') as wordfile:
         for word in wordfile:
             for word2 in wordfile:
                 twowords = word.strip()+word2.strip()
@@ -45,7 +46,7 @@ def checkTwoWords(name, salt, myhash):
                     return True
                 
 def checkThreeWords(name, salt, myhash):
-    with open('c:\\Users\\TreyS\\OneDrive\\Desktop\\cracklib-small.txt', 'r') as wordfile:
+    with open(WORDFILE, 'r') as wordfile:
         for word in wordfile:
             for word2 in wordfile:
                 for word3 in wordfile:
@@ -55,7 +56,7 @@ def checkThreeWords(name, salt, myhash):
                         print(name + ' - '+threewords)
                         return True
 
-with open('c:\\Users\\TreyS\\OneDrive\\Desktop\\hashes.txt', 'r') as hashfile:
+with open(HASHFILE, 'r') as hashfile:
     for thehash in hashfile:
         #found = False
         name = thehash.split(':')[0].strip()
